@@ -14,6 +14,7 @@ public class TorpedoStore {
 
   private int torpedoCount = 0;
 
+  //Moved the Random generator instance to a private field in the class, instead of creating a new instance each time the fire method is called.
   private Random generator = new Random();
 
   public TorpedoStore(int numberOfTorpedos){
@@ -31,6 +32,7 @@ public class TorpedoStore {
   }
 
   public boolean fire(int numberOfTorpedos){
+    // Added a try-catch block to the fire method, so that invalid arguments (number of torpedoes to fire) now throw and catch an IllegalArgumentException, returning false instead of silently failing.
     try{
       if(numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount){
         throw new IllegalArgumentException("numberOfTorpedos");
@@ -46,6 +48,7 @@ public class TorpedoStore {
 
     if (r >= FAILURE_RATE) {
       // successful firing
+      // Fixed the torpedo count decrement operation in the fire method from this.torpedoCount =- numberOfTorpedos (which incorrectly sets the count to negative) to this.torpedoCount -= numberOfTorpedos, ensuring the count is reduced correctly.
       this.torpedoCount -= numberOfTorpedos;
       success = true;
     } else {
